@@ -1,0 +1,29 @@
+{
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mongodb": "^4.10.0",
+    "nodemon": "^2.0.20"
+  },
+  "name": "341-project2",
+  "version": "1.0.0",
+  "description": "code for project 2 of the course",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev_start": "nodemon server.js",
+    "swagger-autogen": "node ./swagger.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jbetz08/341-project2.git"
+  },
+  "author": "Josh Betzsold",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jbetz08/341-project2/issues"
+  },
+  "homepage": "https://github.com/jbetz08/341-project2#readme"
+}
