@@ -1,20 +1,34 @@
 const mongodb = require('../db/connect');
 const ObjectId = require('mongodb').ObjectId;
 
-const findAllCars = async (req, res) => {
-    const result = await mongodb.getDb().db().collection('cars').find();
-    result.toArray().then((lists) => {
-        res.setHeader('Content-Type', 'application/json');
-        res.status(200).json(lists);
+const findAllCars = (req, res) => {
+    mongodb
+    .getDb()
+    .db()
+    .collection('cars')
+    .find()
+    .toArray((err, lists) => {
+      if (err) {
+        res.status(400).json({ message: err });
+      }
+      res.setHeader('Content-Type', 'application/json');
+      res.status(200).json(lists);
     });
 };
 
-const findOneCar = async (req, res) => {
+const findOneCar = (req, res) => {
     const userId = new ObjectId(req.params.id);
-    const result = await mongodb.getDb().db().collection('cars').find({ _id: userId});
-    result.toArray().then((lists) => {
-        res.setHeader('Content-Type', 'application/json');
-        res.status(200).json(lists[0]);
+    mongodb
+    .getDb()
+    .db()
+    .collection('cars')
+    .find({ _id: userId })
+    .toArray((err, result) => {
+      if (err) {
+        res.status(400).json({ message: err });
+      }
+      res.setHeader('Content-Type', 'application/json');
+      res.status(200).json(result[0]);
     });
 };
 
@@ -37,6 +51,9 @@ const createOneCar = async (req, res) => {
 };
 
 const updateEntireCar = async (req, res) => {
+    if (!ObjectId.isValid(req.params.id)) {
+        res.status(400).json('Must use a valid car id to update a contact.');
+    }
     const userId = new Object(req.params.id);
     const car = {
         make: req.body.make,
@@ -59,6 +76,9 @@ const updateEntireCar = async (req, res) => {
 };
 
 const deleteEntireCar = async (req, res) => {
+    if (!ObjectId.isValid(req.params.id)) {
+        res.status(400).json('Must use a valid car id to delete a car.');
+    }
     const userId = new ObjectId(req.params.id);
     const response = await mongodb.getDb().db().collection('cars').remove({ _id: userId }, true);
     console.log(response);
